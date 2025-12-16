@@ -20,6 +20,35 @@ GuiClose(guiID) {
     }
 }
 
+GuiSize:
+    if (A_EventInfo = 1)
+        return
+
+    LeftW := Round(A_GuiWidth * LEFT_RATIO)
+
+    GuiControl, Move, LeftPanel, w%LeftW% h%A_GuiHeight%
+    GuiControl, Move, Divider, x%LeftW% h%A_GuiHeight%
+    GuiControl, Move, RobloxHost
+        , x%LeftW%+1 w%A_GuiWidth%-LeftW-1 h%A_GuiHeight%
+
+    if (RobloxHwnd) {
+        WinMove, ahk_id %RobloxHwnd%, , LeftW+1, 0
+            , A_GuiWidth-LeftW-1
+            , A_GuiHeight
+    }
+return
+
+AttachRoblox() {
+    global MainGuiID, RobloxHwnd
+
+    WinWait, ahk_exe RobloxPlayerBeta.exe
+    WinGet, RobloxHwnd, ID, ahk_exe RobloxPlayerBeta.exe
+
+    DllCall("SetParent", "Ptr", RobloxHwnd, "Ptr", MainGuiID)
+}
+
+
+
 LEFT_RATIO := 0.4   ; 40% GUI
 RIGHT_RATIO := 0.6  ; 60% Roblox
 
