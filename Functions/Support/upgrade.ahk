@@ -12,7 +12,7 @@ Upgrade(upgradeCount := 1, unitName := "") {
         Sleep, 500
 
         if (unitName != "")
-            Log("Upgraded " . unitName . upgradeCount)
+            Log("Upgraded " . unitName . " " . upgradeCount . " times.)
         else
             Log("Upgrade applied.")
 
