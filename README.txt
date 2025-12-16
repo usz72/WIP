@@ -1,4 +1,4 @@
-Required settings
+Required settings in game
 
 Set UI Scale 50,
 Enable AutoSkip Summon,
