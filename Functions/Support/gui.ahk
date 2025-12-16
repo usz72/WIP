@@ -14,8 +14,10 @@ global UserWebhook := ""
 
 GuiClose(guiID) {
     if (guiID = "Main") {
+        Log("Main Gui Closed")
         ExitApp
     } else {
+        Log(guiID . "Closed")
         Gui, %guiID%: Destroy
     }
 }
@@ -45,6 +47,7 @@ AttachRoblox() {
     WinGet, RobloxHwnd, ID, ahk_exe RobloxPlayerBeta.exe
 
     DllCall("SetParent", "Ptr", RobloxHwnd, "Ptr", MainGuiID)
+    Log("Roblox Attached")
 }
 
 
@@ -82,7 +85,7 @@ CreateMainGUI() {
 
     Gui, Add, Button, x%btnX% y%btnY% w%btnW% h%btnH% gOpenWebhook, Webhook Setup
     Gui, Add, Button, x%btnX% y% btnY+btnH+btnGap % w%btnW% h%btnH% gTestButton, Settings
-
+    Log("Buttons Added")
     ; ------------------------
     ; TOP LEFT: LOG AREA (RIGHT OF BUTTONS)
     ; ------------------------
@@ -98,7 +101,7 @@ CreateMainGUI() {
     Gui, Add, Edit
         , vLogBox x%logX% y%logY% w%logW% h%logH%
         ReadOnly -WantReturn +VScroll
-
+    Log("LogBox Created")
     
     ; ------------------------
     ; ROBLOX HOST AREA
@@ -123,6 +126,7 @@ OpenWebhook(){
     Gui, Add, Edit, vUserWebhook x10 y30 w300 h20
     Gui, Add, Button, x10 y60 w100 h30 gSubmitWebhookFunc, Submit
     Gui, Show, w330 h120, Webhook Setup
+    Log("Webhook Window Opened")
 }
 
 SubmitWebhookFunc() {
@@ -130,10 +134,12 @@ SubmitWebhookFunc() {
     Gui, Submit, NoHide
     SetupWebhook(UserWebhook) 
     Gui, Destroy
+    Log("Webhook Submitted")
 }
 
 TestButton() {
     
+    Log("Test button pressed")
     Setup()
 }
 
