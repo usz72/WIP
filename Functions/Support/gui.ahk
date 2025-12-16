@@ -20,23 +20,68 @@ GuiClose(guiID) {
     }
 }
 
-
+LEFT_RATIO := 0.4   ; 40% GUI
+RIGHT_RATIO := 0.6  ; 60% Roblox
 
 CreateMainGUI() {
     global LogBox, MainGuiID
-    Gui, +AlwaysOnTop +Resize
+    global LEFT_RATIO
+
+    initW := 1000
+    initH := 550
+
+    Gui, New, +AlwaysOnTop +Resize +MinSize800x450 +HwndMainGuiID
+    Gui, Color, 1E1E1E
     Gui, Font, s10, Consolas
 
-    Gui, Add, Text, x250 y5, LogBox:
-    Gui, Font, s7 i, Consolas
-    Gui, Add, Edit, vLogBox x250 y25 w350 h250 ReadOnly -WantReturn +VScroll
+    LeftW := Round(initW * LEFT_RATIO)
 
-    Gui, Add, Button, x25 y20 w150 h30 gOpenWebhook, Webhook Setup
-    Gui, Add, Button, x25 y70 w150 h30 gTestButton, Settings
-    Gui, Add, Button, x25 y120 w150 h30 gTestButton, TestButton
+    ; ------------------------
+    ; LEFT PANEL BACKGROUND
+    ; ------------------------
+    Gui, Add, Text, x0 y0 w%LeftW% h%initH% Background2A2A2A vLeftPanel
+    Gui, Add, Text, x%LeftW% y0 w1 h%initH% Background3A3A3A vDivider
 
-    Gui Show, w600 h300, Main GUI
-    MainGuiID := WinExist()
+    ; ------------------------
+    ; TOP LEFT: BUTTON COLUMN
+    ; ------------------------
+    btnX := 20
+    btnY := 25
+    btnW := 150
+    btnH := 32
+    btnGap := 12
+
+    Gui, Add, Button, x%btnX% y%btnY% w%btnW% h%btnH% gOpenWebhook, Webhook Setup
+    Gui, Add, Button, x%btnX% y% btnY+btnH+btnGap % w%btnW% h%btnH% gTestButton, Settings
+
+    ; ------------------------
+    ; TOP LEFT: LOG AREA (RIGHT OF BUTTONS)
+    ; ------------------------
+    logX := btnX + btnW + 20
+    logY := btnY
+    logW := LeftW - logX - 20
+    logH := (btnH * 2) + btnGap
+
+    Gui, Font, s9, Consolas
+    Gui, Add, Text, x%logX% y%logY%-18 cWhite, Log
+
+    Gui, Font, s8, Consolas
+    Gui, Add, Edit
+        , vLogBox x%logX% y%logY% w%logW% h%logH%
+        ReadOnly -WantReturn +VScroll
+
+    
+    ; ------------------------
+    ; ROBLOX HOST AREA
+    ; ------------------------
+    Gui, Add, Text
+        , x%LeftW%+1 y0
+        w% initW-LeftW-1 %
+        h%initH%
+        Background000000
+        vRobloxHost
+
+    Gui, Show, w%initW% h%initH%, Main GUI
 }
 
 
