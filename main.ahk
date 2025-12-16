@@ -61,6 +61,8 @@ OnExit("ShutdownGDIp")
 CreateMainGUI() 
 LogSetup()
 Log("Gui and Log are setup.")
+AttachRoblox()
+Log("Roblox Attached")
 
 F1::
     TestButton()
